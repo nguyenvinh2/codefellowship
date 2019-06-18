@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
 <div th:fragment="nav-bar">
     <nav class="navbar">
         <h2 id="title">CodeFellowship</h2>
         <div class="login dropdown">
-            <h2>Login</h2>
+            <h2 sec:authorize="#{isAnonymous()}">Login</h2>
+            <h2 sec:authorize="#{isAuthenticated()}"></h2>
             <i class="fas fa-caret-down"></i>
             <div class="dropdown-content">
-                <form>
+                <form method="post" th:action="@{/login}">
                     <div class="containers">
                         <label><b>Username</b></label>
-                        <input type="text" placeholder="Enter Username" name="uname" required>
+                        <input type="text" placeholder="Enter Username" name="username" required>
 
                         <label><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="psw" required>
+                        <input type="password" placeholder="Enter Password" name="password" required>
                         <span class="forgot-password">I forgot my <a href="#">password.</a></span>
-
                         <button type="submit">Login</button>
-                        <label>
-                            <input type="checkbox" checked="checked" name="remember"> Remember me
-                        </label>
                         <br>
                     </div>
-
-                    <div class="containers">
-                        <span class="signup"> New? <a th:href="@{/register}">Sign Up!</a></span>
-                    </div>
                 </form>
+                <div class="containers">
+                    <span class="signup"> New? <a th:href="@{/register}">Sign Up!</a></span>
+                </div>
             </div>
         </div>
     </nav>

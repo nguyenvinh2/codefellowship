@@ -13,17 +13,25 @@
     <div class="inner-login">
         <h3>Register Your Account!</h3>
         <form method="post" th:action="@{/register}">
-                <label class="register-info">First Name</label>
-                <input name="firstName" class="register-info"/>
-                <label class="login-info">Last Name</label>
-                <input name="lastName" class="login-info"/>
-                <label class="login-info">Email</label>
-                <input name="username" class="login-info"/>
-                <label class="login-info">Password</label>
-                <input name="password" class="login-info"/>
-                <label class="login-info">Confirm Password</label>
-                <input class="login-info"/>
-                <button class="login-info" type="submit">Register</button>
+            <label class="login-info">Email</label>
+            <input name="username" class="login-info"/>
+
+            <label class="login-info">Password</label>
+            <input name="password" class="login-info"/>
+
+            <label class="register-info">First Name</label>
+            <input name="firstName" class="register-info"/>
+
+            <label class="login-info">Last Name</label>
+            <input name="lastName" class="login-info"/>
+
+            <label class="register-info">Date of Birth</label>
+            <input name="firstName" class="register-info" type="date"/>
+
+            <label class="login-info">Description of Yourself</label>
+            <textarea name="lastName" class="login-info"></textarea>
+
+            <button class="login-info" type="submit">Register</button>
         </form>
     </div>
 </section>

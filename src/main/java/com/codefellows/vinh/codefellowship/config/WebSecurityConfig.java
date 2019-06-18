@@ -1,5 +1,7 @@
 package com.codefellows.vinh.codefellowship.config;
 
+import com.codefellows.vinh.codefellowship.implement.UserServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,8 +10,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Configuration@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private UserServiceInterface userServiceInterface;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -24,7 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/register", "/css/*").permitAll()
-                // anything else, you must be logged in
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -32,9 +37,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .logout();
     }
 
-/*    @Override
+    @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }*/
+    }
+
+    @Bean
+    public  UserServiceInterface userServiceInterface() {
+        return new UserServiceInterface();
+    }
 }

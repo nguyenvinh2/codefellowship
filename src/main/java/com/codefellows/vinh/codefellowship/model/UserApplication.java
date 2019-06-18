@@ -1,10 +1,7 @@
 package com.codefellows.vinh.codefellowship.model;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,12 +17,8 @@ public class UserApplication implements UserDetails {
     private String lastName;
     private String username;
     private String password;
-
-
-    public UserApplication(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+    private String dateOfBirth;
+    private String bio;
 
     public int getId() {
         return id;
@@ -34,6 +27,29 @@ public class UserApplication implements UserDetails {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public UserApplication(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public UserApplication() {};
 
     public String getFirstName() {
         return firstName;
