@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link href="/css/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <title>Error</title>
+</head>
+<body>
+<div class="inner-login">
+    <h2>Something went wrong with your request</h2>
+    <ul>
+        <li th:text="${'The path ' + path + ' cannot be retrieved'}">
+        </li >
+        <li th:text="${'due to ' + error + ' error.'}">
+        </li>
+        <li th:text="${'Status Code: ' + status}">
+        </li>
+        <li th:text="${'Additional Info: ' + message}">
+        </li>
+    </ul>
+</div>
+</body>
+</html>

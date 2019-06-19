@@ -2,15 +2,15 @@
 
 ## Introduction
 
-
-
 This is an example of Spring Security using Spring Boot
 
 The application allows users to create an account and login
 
     / - home page allowing user to login
     /register - allows user to create acccount with user info
-    /user - navigates to page with user infor
+    /myprofile - navigates to page with user infor
+
+The /myprofile path allows for users to add a post attached to them.
 
 ## Instructions
 

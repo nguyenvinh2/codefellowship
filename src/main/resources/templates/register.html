@@ -14,9 +14,9 @@
         <h3>Register Your Account!</h3>
         <form method="post" th:action="@{/register}" autocomplete="on">
             <label class="login-info">Username</label><br/>
-            <input name="username" class="login-info"/><br/>
+            <input name="username" class="login-info" required/><br/>
             <label class="login-info">Password</label><br/>
-            <input name="password" class="login-info"/><br/>
+            <input name="password" class="login-info" required/><br/>
 
             <label class="login-info">First Name</label><br/>
             <input name="firstName" class="register-info"/><br/>

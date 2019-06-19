@@ -50,12 +50,6 @@ public class UserApplicationController {
     public String user(Principal user, Model m) {
         UserApplication getUser = userRepo.findByUsername(user.getName());
         Iterable<Post> getPost = postRepo.findByUserApplication(getUser);
-
-        for(Post post: getPost) {
-            System.out.println(post.getTimeStamp() + "jholla isndsgliwhieghwigehwiofghilwhgliwhghw");
-        }
-        System.out.println("Okay cool");
-
         m.addAttribute("userInfo", getUser);
         m.addAttribute("user", user);
         m.addAttribute("posts", getPost);
@@ -69,11 +63,5 @@ public class UserApplicationController {
         post.setUserApplication(getUser);
         postRepo.save(post);
         return new RedirectView("/myprofile");
-    }
-
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login() {
-        return "login";
     }
 }
