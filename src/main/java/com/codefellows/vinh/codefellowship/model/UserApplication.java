@@ -1,14 +1,16 @@
 package com.codefellows.vinh.codefellowship.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
+@Table(name="userApplication")
 public class UserApplication implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +18,19 @@ public class UserApplication implements UserDetails {
 
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String username;
     private String password;
     private String dateOfBirth;
     private String bio;
+
+    @OneToMany(mappedBy="userApplication", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public List<Post> posts;
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public void setUsername(String username) {
         this.username = username;
