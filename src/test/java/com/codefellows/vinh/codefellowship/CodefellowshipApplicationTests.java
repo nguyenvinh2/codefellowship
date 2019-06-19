@@ -4,8 +4,10 @@ import com.codefellows.vinh.codefellowship.config.WebSecurityConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,27 +23,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebSecurityConfig.class })
-@WebAppConfiguration
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CodefellowshipApplicationTests {
 
-	@Autowired
-	private WebApplicationContext wac;
+	@LocalServerPort
+	private int port;
 
 	@Autowired
-	private MockMvc mvc;
-
-	@Before
-	public void setup() throws Exception {
-		this.mvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-	}
+	private TestRestTemplate restTemplate;
 
 	@Test
-	public void indexPageTest() throws Exception {
-		mvc.perform(get("/"));
+	public void HomePageTest() throws Exception {
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
+				String.class)).contains("Homepage");
 	}
-
+	@Test
+	public void RegisterPageTest() throws Exception {
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/register",
+				String.class)).contains("Register");
+	}
 
 
 }
