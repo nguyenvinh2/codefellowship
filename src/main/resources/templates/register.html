@@ -9,29 +9,28 @@
     <title>Homepage</title>
 </head>
 <body>
-<section class="login-container">
+<section class="login">
     <div class="inner-login">
         <h3>Register Your Account!</h3>
-        <form method="post" th:action="@{/register}">
-            <label class="login-info">Email</label>
-            <input name="username" class="login-info"/>
+        <form method="post" th:action="@{/register}" autocomplete="on">
+            <label class="login-info">Email</label><br/>
+            <input name="username" class="login-info"/><br/>
+            <label class="login-info">Password</label><br/>
+            <input name="password" class="login-info"/><br/>
 
-            <label class="login-info">Password</label>
-            <input name="password" class="login-info"/>
+            <label class="login-info">First Name</label><br/>
+            <input name="firstName" class="register-info"/><br/>
 
-            <label class="register-info">First Name</label>
-            <input name="firstName" class="register-info"/>
+            <label class="login-info">Last Name</label><br/>
+            <input name="lastName" class="login-info"/><br/>
 
-            <label class="login-info">Last Name</label>
-            <input name="lastName" class="login-info"/>
+            <label class="login-info">Date of Birth</label><br/>
+            <input name="dateOfBirth" class="register-info" type="date"/><br/>
 
-            <label class="register-info">Date of Birth</label>
-            <input name="firstName" class="register-info" type="date"/>
+            <label class="login-info">Description of Yourself</label><br/>
+            <textarea name="bio" class="login-info"></textarea><br/>
 
-            <label class="login-info">Description of Yourself</label>
-            <textarea name="lastName" class="login-info"></textarea>
-
-            <button class="login-info" type="submit">Register</button>
+            <button type="submit">Register</button><br/>
         </form>
     </div>
 </section>

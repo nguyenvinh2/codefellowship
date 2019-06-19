@@ -23,6 +23,14 @@
     padding: 5px;
 }
 
+.inner-login{
+    text-align: center;
+}
+
+.inner-login button {
+    width: 25%;
+}
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -37,6 +45,11 @@
 .dropdown:hover .dropdown-content{
     display: block;
     margin-left: -175px;
+}
+
+.dropdown:hover .special {
+    display: block;
+    margin-left: -75px;
 }
 
 .login:hover{

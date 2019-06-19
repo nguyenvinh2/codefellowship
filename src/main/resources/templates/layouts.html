@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div th:fragment="nav-bar">
     <nav class="navbar">
         <h2 id="title">CodeFellowship</h2>
         <div class="login dropdown">
-            <h2 sec:authorize="#{isAnonymous()}">Login</h2>
-            <h2 sec:authorize="#{isAuthenticated()}"></h2>
+            <h2 th:if="${user}"><a th:text="${user.getName()}" th:href="@{/user}"></a></h2>
+            <h2 th:unless="${user}">Login</h2>
             <i class="fas fa-caret-down"></i>
-            <div class="dropdown-content">
-                <form method="post" th:action="@{/login}">
+            <div th:unless="${user}" class="dropdown-content">
+                <form method="post" action="/">
                     <div class="containers">
                         <label><b>Username</b></label>
-                        <input type="text" placeholder="Enter Username" name="username" required>
-
+                        <input type="text" placeholder="Enter Username" name="username" required autocomplete="off">
                         <label><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="password" required>
+                        <input type="password" placeholder="Enter Password" name="password" required autocomplete="off">
                         <span class="forgot-password">I forgot my <a href="#">password.</a></span>
                         <button type="submit">Login</button>
                         <br>
@@ -24,6 +23,11 @@
                 <div class="containers">
                     <span class="signup"> New? <a th:href="@{/register}">Sign Up!</a></span>
                 </div>
+            </div>
+            <div th:if="${user}" class="special dropdown-content">
+                <form action="/logout" method="post">
+                    <button type="submit">Logout</button>
+                </form>
             </div>
         </div>
     </nav>

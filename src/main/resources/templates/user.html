@@ -9,10 +9,14 @@
     <title>Title</title>
 </head>
 <body>
-<h2 th:text="${user.username}"></h2>
-<p th:text="${user.firstName}"></p>
-<p th:text="${user.lastName}"></p>
-<p th:text="${user.dateOfBirth}"></p>
-<p th:text="${user.bio}"></p>
+<div th:replace="layouts.html :: nav-bar"></div>
+<div class="inner-login">
+    <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+    <h2 th:text="${userInfo.username}"></h2>
+    <p th:text="${userInfo.firstName}"></p>
+    <p th:text="${userInfo.lastName}"></p>
+    <p th:text="${userInfo.dateOfBirth}"></p>
+    <p th:text="${userInfo.bio}"></p>
+</div>
 </body>
 </html>

@@ -11,8 +11,9 @@ import java.util.Collection;
 @Entity
 public class UserApplication implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private String firstName;
     private String lastName;
     private String username;
@@ -20,7 +21,15 @@ public class UserApplication implements UserDetails {
     private String dateOfBirth;
     private String bio;
 
-    public int getId() {
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -44,12 +53,16 @@ public class UserApplication implements UserDetails {
         this.bio = bio;
     }
 
-    public UserApplication(String username, String password) {
+    public UserApplication(){};
+
+    public UserApplication(String firstName, String lastName, String username, String password, String dateOfBirth, String bio) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.bio = bio;
     }
-
-    public UserApplication() {};
 
     public String getFirstName() {
         return firstName;
@@ -65,14 +78,6 @@ public class UserApplication implements UserDetails {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override

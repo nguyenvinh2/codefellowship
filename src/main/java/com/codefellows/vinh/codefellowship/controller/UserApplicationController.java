@@ -7,20 +7,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.ArrayList;
 
 @Controller
-public class UserController {
+public class UserApplicationController {
 
     @Autowired
     private UserRepo userRepo;
@@ -34,31 +32,24 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String createUser(@ModelAttribute UserApplication user) {
-        UserApplication newUser = new UserApplication(user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword())) {};
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
-        newUser.setDateOfBirth(user.getDateOfBirth());
-        newUser.setBio(user.getBio());
-        userRepo.save(newUser);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, new ArrayList<>());
+    public RedirectView createUser(@ModelAttribute UserApplication user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepo.save(user);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "redirect:/user";
+        return new RedirectView("/user");
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String user(Principal user, Model m) {
         UserApplication getUser = userRepo.findByUsername(user.getName());
-        m.addAttribute("user", getUser);
+        m.addAttribute("userInfo", getUser);
+        m.addAttribute("user", user);
         return "user";
     }
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logout (HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        return "redirect:/login?logout=true";
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login() {
+        return "login";
     }
 }
