@@ -19,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserApplicationController {
@@ -50,6 +51,11 @@ public class UserApplicationController {
     public String user(Principal user, Model m) {
         UserApplication getUser = userRepo.findByUsername(user.getName());
         Iterable<Post> getPost = postRepo.findByUserApplication(getUser);
+        List<UserApplication> followers = new ArrayList<>(getUser.getFollowers());
+        List<UserApplication> leaders = new ArrayList<>(getUser.getLeaders());
+        System.out.println(followers.get(0).getUsername());
+        m.addAttribute("followers", followers);
+        m.addAttribute("leaders", leaders);
         m.addAttribute("userInfo", getUser);
         m.addAttribute("user", user);
         m.addAttribute("posts", getPost);

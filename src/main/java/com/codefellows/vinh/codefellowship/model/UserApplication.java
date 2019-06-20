@@ -2,12 +2,15 @@ package com.codefellows.vinh.codefellowship.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="userApplication")
@@ -125,4 +128,37 @@ public class UserApplication implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Set<UserApplication> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<UserApplication> followers) {
+        this.followers = followers;
+    }
+
+    public Set<UserApplication> getLeaders() {
+        return leaders;
+    }
+
+    public void setLeaders(Set<UserApplication> leaders) {
+        this.leaders = leaders;
+    }
+
+    @ManyToMany(cascade={CascadeType.ALL})
+    @JoinTable(name="follows",
+            joinColumns={@JoinColumn(name="follower_ID")},
+            inverseJoinColumns={@JoinColumn(name="leader_ID")})
+    private Set<UserApplication> leaders = new HashSet<UserApplication>();
+
+    @ManyToMany(mappedBy="leaders")
+    private Set<UserApplication> followers = new HashSet<UserApplication>();
 }
