@@ -6,9 +6,13 @@ This is an example of Spring Security using Spring Boot
 
 The application allows users to create an account and login
 
+and follow other users.
+
     / - home page allowing user to login
     /register - allows user to create acccount with user info
     /myprofile - navigates to page with user infor
+    /feed - see all posts from people you follow
+    /users/{userId} - see profiles from other people
 
 The /myprofile path allows for users to add a post attached to them.
 
