@@ -18,6 +18,19 @@
     <p th:text="${userInfo.dateOfBirth}"></p>
     <p th:text="${userInfo.bio}"></p>
 </div>
+
+<div class="inner-login">
+    <h2>Followers</h2>
+    <p th:if="${followers}" th:each="follower: ${followers}" th:text="${follower.getUsername()}"></p>
+</div>
+
+<div class="inner-login">
+    <h2>Following</h2>
+    <a href="/feed">Check to see what they have to say!</a><br/>
+    <a href="/userindex">Search for People!</a>
+    <p th:if="${leaders}" th:each="leader: ${leaders}" th:text="${leader.getUsername()}"></p>
+</div>
+
 <div class="inner-login">
     <h2>Posts</h2>
     <div th:if="${posts}" th:each="post: ${posts}">
