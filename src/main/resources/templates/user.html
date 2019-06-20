@@ -21,12 +21,14 @@
 
 <div class="inner-login">
     <h2>Followers</h2>
-    <p th:each="follower: ${followers}" th:text="${follower.getUsername()}"></p>
+    <p th:if="${followers}" th:each="follower: ${followers}" th:text="${follower.getUsername()}"></p>
 </div>
 
 <div class="inner-login">
     <h2>Following</h2>
-    <p th:each="leader: ${leaders}" th:text="${leader.getUsername()}"></p>
+    <a href="/feed">Check to see what they have to say!</a>
+    <a href="/userindex">Search for People!</a>
+    <p th:if="${leaders}" th:each="leader: ${leaders}" th:text="${leader.getUsername()}"></p>
 </div>
 
 <div class="inner-login">

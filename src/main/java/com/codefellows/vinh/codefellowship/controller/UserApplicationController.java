@@ -14,11 +14,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -53,7 +57,6 @@ public class UserApplicationController {
         Iterable<Post> getPost = postRepo.findByUserApplication(getUser);
         List<UserApplication> followers = new ArrayList<>(getUser.getFollowers());
         List<UserApplication> leaders = new ArrayList<>(getUser.getLeaders());
-        System.out.println(followers.get(0).getUsername());
         m.addAttribute("followers", followers);
         m.addAttribute("leaders", leaders);
         m.addAttribute("userInfo", getUser);
@@ -69,5 +72,26 @@ public class UserApplicationController {
         post.setUserApplication(getUser);
         postRepo.save(post);
         return new RedirectView("/myprofile");
+    }
+
+    @RequestMapping(value = "/feed", method = RequestMethod.GET)
+    public String feed(Principal user, Model m) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+        UserApplication getUser = userRepo.findByUsername(user.getName());
+        List<UserApplication> leaders = new ArrayList<>(getUser.getLeaders());
+        List<Post> posts = new ArrayList<Post>();
+        for(UserApplication account:leaders) {
+            posts.addAll(account.getPosts());
+        }
+        posts.sort(Comparator.comparing(item -> LocalDateTime.parse(item.getTimeStamp(), formatter)));
+        Collections.reverse(posts);
+        m.addAttribute("user", user);
+        m.addAttribute("posts", posts);
+        return "feed";
+    }
+
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    public String getUser(@RequestParam String userId, Principal user, Model m) {
+        return "user";
     }
 }

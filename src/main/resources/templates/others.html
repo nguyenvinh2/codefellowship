@@ -6,17 +6,24 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
     <link href="/css/styles.css" type="text/css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <title>Feed</title>
+    <title>See Profile</title>
 </head>
 <body>
 <div th:replace="layouts.html :: nav-bar"></div>
+
 <div class="inner-login">
-    <h2>Posts</h2>
-    <div th:if="${posts}" th:each="post: ${posts}">
-        <h3 th:text="${post.getUserApplication().getUsername() + ' says:'}"></h3>
-        <p th:text="${post.getTimeStamp()}"></p>
-        <p th:text="${post.getBody()}"></p>
-    </div>
+    <img src="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+    <h2 th:text="${userInfo.username}"></h2>
+    <p th:text="${userInfo.firstName}"></p>
+    <p th:text="${userInfo.lastName}"></p>
+    <p th:text="${userInfo.bio}"></p>
 </div>
+
+<form method="post" action="/follow">
+    <input type="hidden" value="${userInfo.username}"/>
+    <button type="submit">Follow Me</button>
+</form>
+
+
 </body>
 </html>
