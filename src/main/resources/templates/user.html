@@ -18,5 +18,19 @@
     <p th:text="${userInfo.dateOfBirth}"></p>
     <p th:text="${userInfo.bio}"></p>
 </div>
+<div class="inner-login">
+    <h2>Posts</h2>
+    <div th:if="${posts}" th:each="post: ${posts}">
+        <p th:text="${post.getTimeStamp()}"></p>
+        <p th:text="${post.getBody()}"></p>
+    </div>
+</div>
+<div class="inner-login">
+    <h2>Add a Post</h2>
+    <form method="post" th:action="@{/myprofile}">
+        <textarea name="body"></textarea><br/>
+        <button type="submit">Add Post</button>
+    </form>
+</div>
 </body>
 </html>

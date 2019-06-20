@@ -44,5 +44,11 @@ public class CodefellowshipApplicationTests {
 				String.class)).contains("Register");
 	}
 
+	@Test
+	public void nonLoggedInProfileTest() throws Exception {
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/myprofile",
+				String.class)).contains("Homepage");
+	}
+
 
 }
