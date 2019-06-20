@@ -26,7 +26,7 @@
 
 <div class="inner-login">
     <h2>Following</h2>
-    <a href="/feed">Check to see what they have to say!</a>
+    <a href="/feed">Check to see what they have to say!</a><br/>
     <a href="/userindex">Search for People!</a>
     <p th:if="${leaders}" th:each="leader: ${leaders}" th:text="${leader.getUsername()}"></p>
 </div>

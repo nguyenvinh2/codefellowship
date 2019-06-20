@@ -11,10 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
@@ -91,7 +88,30 @@ public class UserApplicationController {
     }
 
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
-    public String getUser(@RequestParam String userId, Principal user, Model m) {
-        return "user";
+    public String getUser(@PathVariable String userId, Principal user, Model m) {
+        UserApplication getUser = userRepo.findByUsername(userId);
+        m.addAttribute("userInfo", getUser);
+        m.addAttribute("user", user);
+        return "others";
     }
+
+    @RequestMapping(value = "/userindex", method = RequestMethod.GET)
+    public String userIndex(Principal user, Model m) {
+        Iterable<UserApplication> users = userRepo.findAll();
+        m.addAttribute("users", users);
+        m.addAttribute("user", user);
+        return "userindex";
+    }
+
+    @RequestMapping(value = "/follow", method = RequestMethod.POST)
+    public String follow(Principal user, Model m, @RequestParam String followUser) {
+        if(user.getName() != followUser) {
+            UserApplication self = userRepo.findByUsername(user.getName());
+            self.getLeaders().add(userRepo.findByUsername(followUser));
+            userRepo.save(self);
+        }
+        return "redirect:/myprofile";
+    }
+
+
 }
